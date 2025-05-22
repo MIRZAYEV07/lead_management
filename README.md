@@ -15,7 +15,7 @@ Install the following tools:
 
 1. **Cloning the repository**:
     ```
-    
+    git clone git@github.com:MIRZAYEV07/lead_management.git
     ```
 
 2. **Navigate to the project directory**:
