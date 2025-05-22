@@ -227,9 +227,6 @@ storage
 env/
 media_root/
 
-/docker-compose.yml
-/docker-compose-dev.yml
-/docker-compose-db.yml
 /static/
 .env
 .DS_Store
