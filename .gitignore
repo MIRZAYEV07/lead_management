@@ -234,3 +234,4 @@ media_root/
 .env
 .DS_Store
 pgdata
+
