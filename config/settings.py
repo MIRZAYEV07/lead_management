@@ -173,6 +173,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
     'PAGE_SIZE': 300
 }
+
 # cors settings
 
 CORS_ALLOW_ALL_ORIGINS = (os.environ.get('CORS_ALLOW_ALL_ORIGINS', 'True') == 'True')
