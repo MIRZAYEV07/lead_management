@@ -1,0 +1,68 @@
+services:
+  lead_backend:
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+    image: ${DOCKER_REPOSITORY}/app:${DOCKER_APP_VERSION}
+    hostname: app
+    container_name: lead-backend-prod
+    restart: unless-stopped
+    volumes:
+      - ./:/app
+      - ./static/:/app/static
+      - ./media:/app/media
+    ports:
+      - "8800:8000"
+    env_file:
+      - .env
+    depends_on:
+      - lead_redis
+    networks:
+      - lead_network
+
+
+
+  lead_redis:
+    image: "redis:alpine"
+    container_name: lead-redis-prod
+    privileged: true
+    volumes:
+      - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    env_file:
+      - .env
+    networks:
+      - lead_network
+
+  lead_celery_worker:
+    container_name: lead-celery-worker-prod
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+    env_file:
+      - .env
+    command: celery -A core.celery worker --loglevel DEBUG -P threads
+    volumes:
+      - ./static/:/app/static
+      - ./media:/app/media
+    depends_on:
+      - lead_redis
+    networks:
+      - lead_network
+
+
+  lead_celery_beat:
+    container_name: lead-celery-beat-prod
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+    env_file:
+      - .env
+    command: celery -A core.celery beat --pidfile= --loglevel DEBUG
+    depends_on:
+      - lead_redis
+    networks:
+      - lead_network
+
+networks:
+  lead_network:

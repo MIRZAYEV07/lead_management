@@ -1,0 +1,81 @@
+services:
+  lead_backend_prod:
+    container_name: lead-backend-prod
+    build:
+      context: .
+      dockerfile: ./docker/dev/Dockerfile
+    command: >
+      bash -c "
+        python3 manage.py runserver 0.0.0.0:8000
+      "
+    volumes:
+      - .:/app/
+    ports:
+      - 8080:8000
+    env_file:
+      - .env
+    depends_on:
+      - lead_redis_prod
+      - lead_db_prod
+    networks:
+      - lead_network_prod
+
+
+  lead_db_prod:
+    image: postgis/postgis:15-3.3
+    container_name: lead-db-prod
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data/
+    env_file:
+      - .env
+    ports:
+      - 5433:5432
+    networks:
+      - lead_network_prod
+
+
+  lead_redis_prod:
+    image: "redis:alpine"
+    container_name: lead-redis-dev
+    privileged: true
+    volumes:
+      - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    env_file:
+      - .env
+    networks:
+      - lead_network_prod
+
+
+  lead_celery_worker_prod:
+    container_name: lead-celery-worker-prod
+    build:
+      context: .
+      dockerfile: ./docker/dev/Dockerfile
+    env_file:
+      - .env
+    command: celery -A core.celery worker --loglevel DEBUG -P threads
+    depends_on:
+      - lead_redis_prod
+    networks:
+      - lead_network_prod
+
+
+  lead_celery_beat_prod:
+    container_name: lead-celery-beat-prod
+    build:
+      context: .
+      dockerfile: ./docker/dev/Dockerfile
+    env_file:
+      - .env
+    command: celery -A core.celery beat --pidfile= --loglevel DEBUG
+    depends_on:
+      - lead_redis_prod
+    networks:
+      - lead_network_prod
+
+
+volumes:
+  postgres_data_prod:
+networks:
+  lead_network_prod:
