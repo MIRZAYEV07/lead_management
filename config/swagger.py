@@ -14,7 +14,6 @@ class BothHttpAndHttpsSchemaGenerator(OpenAPISchemaGenerator):
         schema.schemes = ["http", "https"]
         return schema
 
-
 schema_view = get_schema_view(
     openapi.Info(
         title='Lead Management API',
