@@ -34,8 +34,8 @@ jobs:
           git pull origin main || fail
           docker compose build
           docker compose up -d
-          docker compose exec ws python manage.py migrate
-          docker compose exec ws python manage.py collectstatic --noinput
+          docker compose exec web python manage.py migrate
+          docker compose exec web python manage.py collectstatic --noinput
           EOF
 
       - name: Deploy to production
@@ -47,11 +47,12 @@ jobs:
           cd /home/ubuntu/backend/test_backend/lead_management
           pwd
           whoami
+          sudo su
           git checkout production || fail
           git reset --hard origin/main || fail
           git pull origin main || fail
           docker compose build
           docker compose up -d
-          docker compose exec fs_backend_staging python manage.py migrate
-          docker compose exec fs_backend_staging python manage.py collectstatic --noinput
+          docker compose exec web python manage.py migrate
+          docker compose exec web python manage.py collectstatic --noinput
           EOF
