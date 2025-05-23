@@ -1,6 +1,6 @@
 from django.db import models
 
-#Lead model
+#something
 class Lead(models.Model):
     STATE_CHOICES = [
         ("PENDING", "Pending"),
