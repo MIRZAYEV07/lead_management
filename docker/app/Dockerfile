@@ -8,9 +8,6 @@ RUN mkdir -p /app/media /app/static \
 RUN apt-get update && \
     apt-get install -y gettext-base gettext
 
-RUN apt-get update && apt-get install -y gdal-bin libgdal-dev && apt-get install -y python3-gdal \
-  && apt-get install -y gettext-base gettext && apt-get install -y binutils libproj-dev
-
 RUN apt-get install -y weasyprint
 COPY ./requirements.txt /app/
 
