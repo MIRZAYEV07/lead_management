@@ -1,0 +1,56 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+      - production
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up SSH key
+        uses: webfactory/ssh-agent@v0.8.1
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Deploy to staging
+        if: github.ref == 'refs/heads/main'
+        env:
+          STAGING_SERVER: ${{ secrets.STAGING_SERVER }}
+        run: |
+          ssh -o StrictHostKeyChecking=no $STAGING_SERVER << 'EOF'
+          cd /home/ubuntu/backend/test_backend/lead_management
+          pwd
+          whoami
+          git checkout main || fail
+          git reset --hard origin/main || fail
+          git pull origin main || fail
+          docker compose build
+          docker compose up -d
+          docker compose exec ws python manage.py migrate
+          docker compose exec ws python manage.py collectstatic --noinput
+          EOF
+
+      - name: Deploy to production
+        if: github.ref == 'refs/heads/production'
+        env:
+          PROD_SERVER: ${{ secrets.PROD_SERVER }}
+        run: |
+          ssh -o StrictHostKeyChecking=no $PROD_SERVER << 'EOF'
+          cd /home/ubuntu/backend/test_backend/lead_management
+          pwd
+          whoami
+          git checkout production || fail
+          git reset --hard origin/main || fail
+          git pull origin main || fail
+          docker compose build
+          docker compose up -d
+          docker compose exec fs_backend_staging python manage.py migrate
+          docker compose exec fs_backend_staging python manage.py collectstatic --noinput
+          EOF

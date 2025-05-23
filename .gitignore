@@ -126,6 +126,9 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 cover/
+github_deploy_key
+github_deploy_key.pub
+
 
 # Translations
 # *.mo
