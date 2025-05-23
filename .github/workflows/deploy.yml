@@ -32,8 +32,8 @@ jobs:
           git checkout main || fail
           git reset --hard origin/main || fail
           git pull origin main || fail
-          docker compose build
-          docker compose up -d
+          docker compose -f docker-compose-dev.yml build
+          docker compose -f docker-compose-dev.yml up -d
           docker compose exec lead_backend_dev python manage.py migrate
           docker compose exec lead_backend_dev python manage.py collectstatic --noinput
           EOF
@@ -51,8 +51,8 @@ jobs:
           git checkout production || fail
           git reset --hard origin/main || fail
           git pull origin main || fail
-          docker compose build
-          docker compose up -d
+          docker compose -f docker-compose-prod.yml build
+          docker compose -f docker-compose-prod.yml up -d
           docker compose exec lead_backend python manage.py migrate
           docker compose exec lead_backend python manage.py collectstatic --noinput
           EOF
