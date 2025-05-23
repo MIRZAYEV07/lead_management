@@ -22,7 +22,7 @@ services:
 
 
   lead_db_dev:
-    image: postgis/postgis:15-3.3
+    image: postgres:15
     container_name: lead-db-dev
     volumes:
       - postgres_data_dev:/var/lib/postgresql/data/

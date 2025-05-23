@@ -21,7 +21,7 @@ services:
       - lead_network
 
   lead_db_prod:
-    image: postgis/postgis:15-3.3
+    image: postgres:15
     container_name: lead-db-prod
     volumes:
       - postgres_data_prod:/var/lib/postgresql/data/
