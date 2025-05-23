@@ -1,5 +1,4 @@
 import os
-import sys
 from pathlib import Path
 from django.utils import timezone
 from corsheaders.defaults import default_headers
