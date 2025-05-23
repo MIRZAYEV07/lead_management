@@ -20,6 +20,18 @@ services:
     networks:
       - lead_network
 
+  lead_db_prod:
+    image: postgis/postgis:15-3.3
+    container_name: lead-db-prod
+    volumes:
+      - postgres_data_prod:/var/lib/postgresql/data/
+    env_file:
+      - .env
+    ports:
+      - 5434:5432
+    networks:
+      - lead_network
+
 
 
   lead_redis:
@@ -64,5 +76,8 @@ services:
     networks:
       - lead_network
 
+
+volumes:
+  postgres_data_prod:
 networks:
   lead_network:

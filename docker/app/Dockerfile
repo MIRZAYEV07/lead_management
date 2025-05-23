@@ -24,4 +24,4 @@ WORKDIR /app
 
 EXPOSE 8000
 
-CMD gunicorn -c /gunicorn.conf.py --log-level=${DJANGO_LOGLEVEL}--max-requests=1000 --access-logfile - --error-logfile - --bind=0.0.0.0:8000 core.wsgi:application
+CMD gunicorn -c /gunicorn.conf.py --log-level=${DJANGO_LOGLEVEL}--max-requests=1000 --access-logfile - --error-logfile - --bind=0.0.0.0:8000 config.wsgi:application
