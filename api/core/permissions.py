@@ -72,5 +72,7 @@ class DjangoModelPermissions(BasePermission):
         # ).format(self.__class__.__name__)
         return view.get_queryset()
 
-
+class IsSuperUser(BasePermission):
+    def has_permission(self, request, view):
+        return bool(request.user and request.user.is_superuser)
 
