@@ -1,7 +1,8 @@
 from django.db import models
+from apps.base.models import Base
 
 #something
-class Lead(models.Model):
+class Lead(Base):
     STATE_CHOICES = [
         ("PENDING", "Pending"),
         ("REACHED_OUT", "Reached Out"),
