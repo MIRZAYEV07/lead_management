@@ -39,10 +39,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'django_filters',
     'corsheaders',
-    'safedelete',
     'drf_yasg',
     'parler',
-    'rosetta',
+
 
 
     'apps.base',
