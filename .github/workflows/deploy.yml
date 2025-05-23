@@ -44,7 +44,7 @@ jobs:
           PROD_SERVER: ${{ secrets.PROD_SERVER }}
         run: |
           ssh -o StrictHostKeyChecking=no $PROD_SERVER << 'EOF'
-          cd /home/ubuntu/backend/test_backend/lead_management
+          cd /home/ubuntu/backend/prod/lead_management
           pwd
           whoami
           sudo su

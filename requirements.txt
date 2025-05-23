@@ -9,7 +9,6 @@ django-parler-rest==2.2
 django-redis==5.4.0
 django-rosetta==0.10.0
 django-safedelete==1.4.0
-django-jazzmin==3.0.0
 djangorestframework==3.15.1
 djangorestframework-simplejwt==5.3.1
 drf-nested-routers==0.94.1
@@ -28,6 +27,4 @@ python-docx==1.1.2
 tenacity==9.0.0
 weasyprint
 qrcode
-clickhouse-connect
-xlsxwriter
 pyfcm
