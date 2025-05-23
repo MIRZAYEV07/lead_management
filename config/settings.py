@@ -27,7 +27,6 @@ ALLOWED_HOSTS = get_list(os.environ.get('ALLOWED_HOSTS', '*'))
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.gis',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -35,14 +34,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'rest_framework_simplejwt',
     'rest_framework',
-    'django_filters',
-    'corsheaders',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
     'drf_yasg',
-    'parler',
-
-
+    'corsheaders',
 
     'apps.base',
     'apps.user',
@@ -97,7 +93,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': os.environ.get("DB_NAME"),
         'USER': os.environ.get("DB_USER"),
         'PASSWORD': os.environ.get("DB_PASSWORD"),
