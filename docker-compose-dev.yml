@@ -47,32 +47,32 @@ services:
       - lead_network_dev
 
 
-  lead_celery_worker_dev:
-    container_name: lead-celery-worker-dev
-    build:
-      context: .
-      dockerfile: ./docker/dev/Dockerfile
-    env_file:
-      - .env
-    command: celery -A core.celery worker --loglevel DEBUG -P threads
-    depends_on:
-      - lead_redis_dev
-    networks:
-      - lead_network_dev
-
-
-  lead_celery_beat_dev:
-    container_name: lead-celery-beat-dev
-    build:
-      context: .
-      dockerfile: ./docker/dev/Dockerfile
-    env_file:
-      - .env
-    command: celery -A core.celery beat --pidfile= --loglevel DEBUG
-    depends_on:
-      - lead_redis_dev
-    networks:
-      - lead_network_dev
+#  lead_celery_worker_dev:
+#    container_name: lead-celery-worker-dev
+#    build:
+#      context: .
+#      dockerfile: ./docker/dev/Dockerfile
+#    env_file:
+#      - .env
+#    command: celery -A core.celery worker --loglevel DEBUG -P threads
+#    depends_on:
+#      - lead_redis_dev
+#    networks:
+#      - lead_network_dev
+#
+#
+#  lead_celery_beat_dev:
+#    container_name: lead-celery-beat-dev
+#    build:
+#      context: .
+#      dockerfile: ./docker/dev/Dockerfile
+#    env_file:
+#      - .env
+#    command: celery -A core.celery beat --pidfile= --loglevel DEBUG
+#    depends_on:
+#      - lead_redis_dev
+#    networks:
+#      - lead_network_dev
 
 
 volumes:
